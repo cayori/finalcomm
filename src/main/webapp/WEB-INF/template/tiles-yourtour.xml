@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="default" template="/WEB-INF/template/layout.jsp">
+		<put-attribute name="title" value="YOUR TOUR" />
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/template/sidebar.jsp" />
+		<put-attribute name="body" value="/WEB-INF/template/mainbody.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+	
+	<definition name="main" extends="default"> 
+		<put-attribute name="header" value="/template/header_main.jsp" />
+		<put-attribute name="sidebar" value="/template/sidebar.jsp" />
+		<put-attribute name="body" value="/main/mainbody.jsp" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+	</definition>
+	
+	<definition name="reviewList" extends="default"> 
+		<put-attribute name="header" value="/template/header.jsp" />
+		<put-attribute name="sidebar" value="/template/sidebar.jsp" />
+		<put-attribute name="body" value="/main/mainbody.jsp" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+	</definition>
+	
+</tiles-definitions>

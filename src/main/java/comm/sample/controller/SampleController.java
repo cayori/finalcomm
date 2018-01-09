@@ -28,6 +28,13 @@ public class SampleController {
     	return mv;
     }
 	
+	@RequestMapping(value="/sample/tilestest.do")
+	public ModelAndView tilestest() throws Exception{
+		ModelAndView mv = new ModelAndView("default");
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="/sample/selectBoardList.do")
     public ModelAndView selectBoardList(CommandMap commandMap) throws Exception{
     	ModelAndView mv = new ModelAndView("jsonView");

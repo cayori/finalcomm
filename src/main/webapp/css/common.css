@@ -1,0 +1,351 @@
+@charset "utf-8";
+
+.sidebar{
+    position: fixed;
+    right: 0px;
+    bottom:0px;
+    z-index:2;
+    
+    height:100%;
+    background-color: black;
+    width:80px;
+    height:100%;
+    color:#FFFFFF;
+    text-align: center;
+}
+
+.footer{
+    margin-right:12%;
+    margin-left:5%;
+    padding: 20px;
+    height: 100px;
+    text-align: center;
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+      
+    font-size: 12px;
+}
+      
+#blog-header-container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index:1;
+      
+    width: 100%;
+    height: 150px;
+      
+    background-color: #fff;
+}
+      
+#blog-header-container h1 {
+    position: relative;
+    top: 40px;
+    
+    right: 40px;
+    text-align: center;
+      
+    font-size: 4.0em;
+    font-weight: bold;
+}
+      
+#menu-container {
+    position: fixed;
+    z-index:1;
+    top: 150px;
+    left: 0px;
+      
+    width:100%;
+    height: 50px;
+    padding-left: 20px;
+    padding-top: 15px;
+    box-sizing: border-box;
+      
+    background-color: #3a3b40;
+      
+    -webkit-transition: padding-left 200ms linear;
+    -moz-transition: padding-left 200ms linear;
+    -ms-transition: padding-left 200ms linear;
+    -o-transition: padding-left 200ms linear;
+    transition: padding-left 200ms linear;
+}
+#menu-container.fixed {
+    padding-left: 70px;
+    opacity: 0.95;
+    -webkit-box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+}
+#menu-container .menu-item {
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    right: 40px;
+}
+#menu-container .menu-icon {
+    display: block !important;
+    position: absolute;
+    left: -50px;
+    top: 14px;
+      
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #fff;
+      
+    -webkit-transition: left 300ms linear;
+    -moz-transition: left 300ms linear;
+    -ms-transition: left 300ms linear;
+    -o-transition: left 300ms linear;
+    transition: left 300ms linear;
+}
+#menu-container .menu-icon.on {
+    left: 15px;
+}
+
+/* 일반 페이지 GNB 시작 */      
+#menu-top {
+    position: fixed;
+    z-index:1;
+    top: 0px;
+    left: 0px;
+      
+    width:100%;
+    height: 50px;
+    padding-left: 20px;
+    padding-top: 15px;
+    box-sizing: border-box;
+      
+    background-color: #3a3b40;
+
+}
+#menu-top.fixed {
+    padding-left: 70px;
+    opacity: 0.95;
+    -webkit-box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+}
+#menu-top .menu-item {
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    right: 40px;
+}
+
+#menu-top .menu-icon {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+      
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 일반 페이지 GNB 끝 */
+
+
+#blog-container {
+    margin-top:200px;
+    margin-right:12%;
+    margin-left:5%;
+    padding: 20px;
+}
+
+#content-container {
+    margin-top:70px;
+    margin-right:12%;
+    margin-left:5%;
+    padding: 20px;
+}
+
+#content-container .termbox {
+	width:100%;
+	height:300px;
+	border:1px solid #cccccc;
+	overflow-y:scroll;
+	padding:10px;
+	font-size:12px;
+}
+
+
+/* 이미지 스크롤 부분 시작 */
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  width: 80%;
+  position: relative;
+  top: 200px;
+  right: 40px;
+  margin: auto;
+}
+
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor:pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+/* 이미지 스크롤 부분 끝 */
+
+.inputForm{
+	font-size:16px;
+}
+
+.btn-custom {
+  background-color: hsl(0, 0%, 16%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b", endColorstr="#282828");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b), to(#282828));
+  background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
+  background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b), color-stop(100%, #282828));
+  background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+  background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+  background-image: linear-gradient(#5b5b5b, #282828);
+  border-color: #282828 #282828 hsl(0, 0%, 11%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+  -webkit-font-smoothing: antialiased;
+  font-size:16px;
+  width:150px;
+  height:50px;
+}
+.btn-custom1 {
+  background-color: hsl(0, 0%, 16%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b", endColorstr="#282828");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b), to(#282828));
+  background-image: -moz-linear-gradient(top, #5a5a5a, #182828);
+  background-image: -ms-linear-gradient(top, #5ba5a5a, #182828);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b), color-stop(100%, #282828));
+  background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+  background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+  background-image: linear-gradient(#5b5b5b, #282828);
+  border-color: #282828 #282828 hsl(0, 0%, 11%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+  -webkit-font-smoothing: antialiased;
+  font-size:16px;
+  width:150px;
+  height:50px;
+}
+
+.content-cellstyle-selected{
+	border:1px solid #000000;
+	background-color:#eff5ff;
+	width:25%;
+	height:50px;
+	text-align:center;
+	font-weight:bold;
+}
+.content-cellstyle-selected A:link {
+	text-decoration:none; color:#000000;
+}
+
+.content-cellstyle-noSelect{
+	border:1px solid #cccccc;
+	width:25%;
+	height:50px;
+	text-align:center;
+}
+.content-cellstyle-noSelect A:link {
+	text-decoration:none; color:#000000;
+}
+.content-notice-cellstyle {
+	width:25%;
+	padding:5px;
+	font-size:0.8em;
+	vertical-align:top;
+	text-align:left;
+}
+
+.myPageMenuItem {
+	width:25%;
+	height:30px;
+}
+.myPageMenuItem A {
+	text-decoration:none;
+	color: #FFFFFF;
+}
