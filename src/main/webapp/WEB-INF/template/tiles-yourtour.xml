@@ -21,10 +21,10 @@
 	</definition>
 	
 	<definition name="reviewList" extends="default"> 
-		<put-attribute name="header" value="/template/header.jsp" />
-		<put-attribute name="sidebar" value="/template/sidebar.jsp" />
-		<put-attribute name="body" value="/main/mainbody.jsp" />
-		<put-attribute name="footer" value="/template/footer.jsp" />
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/template/sidebar.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/review/boardList.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
 	</definition>
 	
 </tiles-definitions>

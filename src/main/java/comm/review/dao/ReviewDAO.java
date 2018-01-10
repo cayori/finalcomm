@@ -36,6 +36,10 @@ public class ReviewDAO extends AbstractDAO{
 		update("review.deleteBoard", map);
 	}
 
+	
+	
+	
+	// 파일 관련해서는 마지막에 전반적으로 손볼것
 	public void insertFile(Map<String, Object> map) throws Exception{
 		insert("review.insertFile", map);
 	}

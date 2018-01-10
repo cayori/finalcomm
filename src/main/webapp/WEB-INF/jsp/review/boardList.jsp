@@ -5,20 +5,29 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
-	<h2>게시판 목록</h2>
+	<table>
+		<tr><td height="50"/></tr>
+		<tr><td style="padding-left:20px"><h2>여행 후기</h2></td></tr>
+	</table>
 	<table class="board_list">
 		<colgroup>
-			<col width="10%"/>
+			<col width="50"/>
 			<col width="*"/>
+			<col width="10%"/>
+			<col width="50"/>
+			<col width="50"/>
 			<col width="15%"/>
-			<col width="20%"/>
+			<col width="80"/>
 		</colgroup>
 		<thead>
 			<tr>
 				<th scope="col">글번호</th>
 				<th scope="col">제목</th>
+				<th scope="col">작성자</th>
 				<th scope="col">조회수</th>
+				<th scope="col">추천수</th>
 				<th scope="col">작성일</th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,20 +60,20 @@
 		
 		function fn_openBoardWrite(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardWrite.do' />");
+			comSubmit.setUrl("<c:url value='/comm/review/openBoardWrite.do' />");
 			comSubmit.submit();
 		}
 		
 		function fn_openBoardDetail(obj){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardDetail.do' />");
+			comSubmit.setUrl("<c:url value='/comm/review/openBoardDetail.do' />");
 			comSubmit.addParam("IDX", obj.parent().find("#IDX").val());
 			comSubmit.submit();
 		}
 		
 		function fn_selectBoardList(pageNo){
 			var comAjax = new ComAjax();
-			comAjax.setUrl("<c:url value='/sample/selectBoardList.do' />");
+			comAjax.setUrl("<c:url value='/comm/review/selectBoardList.do' />");
 			comAjax.setCallback("fn_selectBoardListCallback");
 			comAjax.addParam("PAGE_INDEX",$("#PAGE_INDEX").val());
 			comAjax.addParam("PAGE_ROW", 15);
@@ -74,7 +83,7 @@
 		
 		function fn_selectBoardListCallback(data){
 			var total = data.TOTAL;
-			var body = $("table>tbody");
+			var body = $(".board_list>tbody");
 			body.empty();
 			if(total == 0){
 				var str = "<tr>" + 
@@ -96,11 +105,13 @@
 					str += "<tr>" + 
 								"<td>" + value.IDX + "</td>" + 
 								"<td class='title'>" +
-									"<a href='#this' name='title'>" + value.TITLE + "</a>" +
+									"<a href='#this' name='title'>" + value.SUBJECT + "</a>" +
 									"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
 								"</td>" +
-								"<td>" + value.HIT_CNT + "</td>" + 
-								"<td>" + value.CREA_DTM + "</td>" + 
+								"<td>" + value.WRITER + "</td>" + 
+								"<td>" + value.HITCOUNT + "</td>" +
+								"<td>" + value.RECOMMENDCOUNT + "</td>" + 
+								"<td>" + value.WRITEDATE + "</td>" + 
 							"</tr>";
 				});
 				body.append(str);

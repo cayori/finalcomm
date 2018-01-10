@@ -9,50 +9,54 @@
 			SELECT
 				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
 			    IDX,
-			    TITLE,
-			    HIT_CNT,
-			    TO_CHAR(CREA_DTM, 'YYYY.MM.DD') AS CREA_DTM
+			    WRITER,
+			    SUBJECT,
+			    HITCOUNT,
+			    RECOMMENDCOUNT,
+			    REGION,
+			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE,
+			    TAG
 			FROM
-			    TB_BOARD
+			    COMM_TRAVELREVIEW
 			WHERE
-				DEL_GB = 'N'
+				DEL_FLAG = 'n'
 		]]>
 		<include refid="common.pagingPost"/> 
 	</select>
 	
 	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
-			SELECT SEQ_TB_BOARD_IDX.NEXTVAL FROM DUAL
+			SELECT COMM_TRAVELREVIEW_IDX_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		<![CDATA[
-			INSERT INTO TB_BOARD
+			INSERT INTO COMM_TRAVELREVIEW
 			(
 				IDX,
-			    TITLE, 
-			    CONTENTS, 
-			    HIT_CNT, 
-			    DEL_GB, 
-			    CREA_DTM, 
-			    CREA_ID
+			    WRITER,
+			    SUBJECT,
+			    CONTENT,
+			    REGION,
+			    WRITEDATE,
+			    TAG
 			)
 			VALUES
 			(
-				#{IDX}, 
-				#{TITLE},
-				#{CONTENTS},
-			    0, 
-			    'N', 
+				#{IDX},
+				#{WRITER},
+				#{SUBJECT},
+				#{CONTENT},
+			    #{REGION},
 			    SYSDATE, 
-			    'Admin'
+			    #{TAG}
 			)
 		]]>
 	</insert>
 	
 	<update id="updateHitCnt" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_BOARD 
+			UPDATE COMM_TRAVELREVIEW 
 			SET
-				HIT_CNT = NVL(HIT_CNT, 0) + 1
+				HITCOUNT = NVL(HITCOUNT, 0) + 1
 			WHERE
 				IDX = #{IDX}	
 		]]>
@@ -63,13 +67,17 @@
 		<![CDATA[
 			SELECT
 				IDX,
-				HIT_CNT,
-				CREA_ID,
-				CREA_DTM,
-				TITLE,
-				CONTENTS
+				WRITER,
+				SUBJECT,
+				CONTENT,
+				HITCOUNT,
+				RECOMMENDCOUNT,
+				REGION,
+				WRITEDATE,
+				FILENAME,
+				TAG
 			FROM
-				TB_BOARD
+				COMM_TRAVELREVIEW
 			WHERE
 				IDX = #{IDX}		
 		]]>
@@ -77,10 +85,10 @@
 	
 	<update id="updateBoard" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_BOARD 
+			UPDATE COMM_TRAVELREVIEW 
 			SET
-				TITLE = #{TITLE},
-				CONTENTS = #{CONTENTS}
+				SUBJECT = #{SUBJECT},
+				CONTENT = #{CONTENT}
 			WHERE
 				IDX = #{IDX}	
 		]]>
@@ -88,9 +96,9 @@
 	
 	<update id="deleteBoard" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_BOARD
+			UPDATE COMM_TRAVELREVIEW
 			SET
-				DEL_GB = 'Y'
+				DEL_FLAG = 'y'
 			WHERE
 				IDX = #{IDX}
 		]]>
@@ -98,56 +106,25 @@
 	
 	<insert id="insertFile" parameterType="hashmap">
 		<![CDATA[
-			INSERT INTO TB_FILE
-			(
-				IDX,
-				BOARD_IDX,
-				ORIGINAL_FILE_NAME,
-				STORED_FILE_NAME,
-				FILE_SIZE,
-				CREA_ID
-			)
-			VALUES
-			(
-				SEQ_TB_FILE_IDX.NEXTVAL,
-				#{BOARD_IDX},
-				#{ORIGINAL_FILE_NAME},
-				#{STORED_FILE_NAME},
-				#{FILE_SIZE},
-				'Admin'
-			)
+			
 		]]>
 	</insert>
 	
 	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-			SELECT
-			    IDX,
-			    ORIGINAL_FILE_NAME,
-			    ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-			FROM
-			    TB_FILE
-			WHERE
-			    BOARD_IDX = #{IDX}
-			    AND DEL_GB = 'N'
+			
 		]]>
 	</select>
 	
 	<update id="deleteFileList" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_FILE SET 
-				DEL_GB = 'Y' 
-			WHERE 
-				BOARD_IDX = #{IDX}	
+			
 		]]>
 	</update>
 	
 	<update id="updateFile" parameterType="hashmap">
 		<![CDATA[
-			UPDATE TB_FILE SET
-				DEL_GB = 'N'
-			WHERE
-				IDX = #{FILE_IDX}	
+			
 		]]>
 	</update>
 </mapper>
