@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="accompany">
+	
+	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/> 
+		<![CDATA[
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
+			    IDX,
+			    WRITER,
+			    SUBJECT,
+			    THEME,
+			    HITCOUNT,
+			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE,
+			    TAG
+			FROM
+			    COMM_ACCOMPANY
+			WHERE
+				DEL_FLAG = 'n'
+		]]>
+		<include refid="common.pagingPost"/> 
+	</select>
+	
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
+			SELECT COMM_ACCOMPANY_IDX_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO COMM_ACCOMPANY
+			(
+				IDX,
+			    WRITER,
+			    SUBJECT,
+			    THEME,
+			    CONTENT,
+			    WRITEDATE,
+			    TAG
+			)
+			VALUES
+			(
+				#{IDX},
+				#{WRITER},
+				#{SUBJECT},
+				#{THEME},
+				#{CONTENT},
+			    SYSDATE, 
+			    #{TAG}
+			)
+		]]>
+	</insert>
+	
+	<update id="updateHitCnt" parameterType="hashmap">
+		<![CDATA[
+			UPDATE COMM_ACCOMPANY 
+			SET
+				HITCOUNT = NVL(HITCOUNT, 0) + 1
+			WHERE
+				IDX = #{IDX}	
+		]]>
+	</update>
+	
+	
+	<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				IDX,
+				WRITER,
+				SUBJECT,
+				THEME,
+				CONTENT,
+				HITCOUNT,
+				WRITEDATE,
+				FILENAME,
+				TAG
+			FROM
+				COMM_ACCOMPANY
+			WHERE
+				IDX = #{IDX}		
+		]]>
+	</select>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE COMM_ACCOMPANY 
+			SET
+				SUBJECT = #{SUBJECT},
+				CONTENT = #{CONTENT}
+			WHERE
+				IDX = #{IDX}	
+		]]>
+	</update>
+	
+	<update id="deleteBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE COMM_ACCOMPANY
+			SET
+				DEL_FLAG = 'y'
+			WHERE
+				IDX = #{IDX}
+		]]>
+	</update>
+<!-- 	
+	<insert id="insertFile" parameterType="hashmap">
+		<![CDATA[
+			
+		]]>
+	</insert>
+	
+	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			
+		]]>
+	</select>
+	
+	<update id="deleteFileList" parameterType="hashmap">
+		<![CDATA[
+			
+		]]>
+	</update>
+	
+	<update id="updateFile" parameterType="hashmap">
+		<![CDATA[
+			
+		]]>
+	</update>
+ -->
+</mapper>
