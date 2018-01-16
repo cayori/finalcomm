@@ -11,11 +11,9 @@
 			    IDX,
 			    WRITER,
 			    SUBJECT,
-			    HITCOUNT,
-			    RECOMMENDCOUNT,
-			    REGION,
+			    SUBSTR(TRIM(CONTENT), 1, 100) AS CONTENT,
 			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE,
-			    TAG
+			    NVL(TAG, '태그가 없습니다') AS TAG
 			FROM
 			    COMM_TRAVELREVIEW
 			WHERE

@@ -7,32 +7,29 @@
 <body>
 	<table>
 		<tr><td height="50"/></tr>
-		<tr><td style="padding-left:20px"><h2>여행 후기</h2></td></tr>
+		<tr>
+			<td style="padding-left:100px"><h2>여행 후기</h2></td>
+		</tr>
 	</table>
-	<table class="board_list">
-		<colgroup>
-			<col width="50"/>
-			<col width="*"/>
-			<col width="10%"/>
-			<col width="50"/>
-			<col width="50"/>
-			<col width="15%"/>
-			<col width="80"/>
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">글번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성자</th>
-				<th scope="col">조회수</th>
-				<th scope="col">추천수</th>
-				<th scope="col">작성일</th>
-				<th scope="col"></th>
-			</tr>
-		</thead>
-		<tbody>
-			
-		</tbody>
+	<table width="100%" border="0">
+		<tr>
+			<td>
+				<table width="100%" border="0">
+					<tr>
+						<td width="10%"></td>
+						<td width="80%">
+							<table class="board_list">
+								<tbody>
+									
+								</tbody>
+							</table>
+						</td>
+						<td width="10%"></td>
+					</tr>
+				</table>
+			</td>
+			<td width="80">
+		</tr>
 	</table>
 	
 	<div id="PAGE_NAVI"></div>
@@ -102,16 +99,23 @@
 				
 				var str = "";
 				$.each(data.list, function(key, value){
-					str += "<tr>" + 
-								"<td>" + value.IDX + "</td>" + 
-								"<td class='title'>" +
-									"<a href='#this' name='title'>" + value.SUBJECT + "</a>" +
+					str +=	"<tr>" + 
+								"<td rowspan='3' width='110'>" +
+								"<a href='#this' name='title'><img src="+ value.IMG +" width='100' height='100'></a>" +
+								"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
+									"</td>" + 
+								"<td height='20' class='title' style='padding:5px;'>" +
+									value.IDX + "&nbsp;||&nbsp;&nbsp;" +
+									"<a href='#this' name='title'><STRONG>" + value.SUBJECT + "</STRONG></a>" +
 									"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
 								"</td>" +
-								"<td>" + value.WRITER + "</td>" + 
-								"<td>" + value.HITCOUNT + "</td>" +
-								"<td>" + value.RECOMMENDCOUNT + "</td>" + 
-								"<td>" + value.WRITEDATE + "</td>" + 
+								"<td width='30%' height='20' style='padding:5px;'>" + value.WRITEDATE + "&nbsp;||&nbsp;" + value.WRITER + "</td>" +
+							"</tr>" +
+							"<tr>" +
+								"<td colspan='2' style='color:#cccdce;'>" + value.CONTENT + "......</td>" +
+							"</tr>" +
+							"<tr>" +
+								"<td height='10' colspan='2' style='padding:0px;'>" + value.TAG + "</td>" +
 							"</tr>";
 				});
 				body.append(str);
