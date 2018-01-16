@@ -32,7 +32,7 @@
 		</tr>
 	</table>
 	
-	<div id="PAGE_NAVI"></div>
+	<div id="PAGE_NAVI" align="center"></div>
 	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
 	
 	<br/>
