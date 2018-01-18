@@ -7,17 +7,19 @@
 		<include refid="common.pagingPre"/> 
 		<![CDATA[
 			SELECT
-				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
-			    IDX,
-			    WRITER,
-			    SUBJECT,
-			    SUBSTR(TRIM(CONTENT), 1, 100) AS CONTENT,
-			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE,
-			    NVL(TAG, '태그가 없습니다') AS TAG
+				ROW_NUMBER() OVER (ORDER BY a.IDX DESC) RNUM,
+			    a.IDX,
+			    a.WRITER,
+			    a.SUBJECT,
+			    SUBSTR(TRIM(a.CONTENT), 1, 100) AS CONTENT,
+			    TO_CHAR(a.WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE,
+			    NVL(a.TAG, '태그가 없습니다') AS TAG,
+			    a.FILENAME,
+			    b.MEMBER_IMG
 			FROM
-			    COMM_TRAVELREVIEW
+			    COMM_TRAVELREVIEW a, MEMBER b
 			WHERE
-				DEL_FLAG = 'n'
+				a.DEL_FLAG = 'n' AND a.WRITER = b.NAME
 		]]>
 		<include refid="common.pagingPost"/> 
 	</select>

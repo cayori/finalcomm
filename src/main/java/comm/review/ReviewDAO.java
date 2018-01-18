@@ -12,7 +12,8 @@ public class ReviewDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception{
-		return (List<Map<String, Object>>)selectPagingList("review.selectBoardList", map);
+		List<Map<String, Object>> result = (List<Map<String, Object>>)selectPagingList("review.selectBoardList", map);
+		return result;
 	}
 
 	public void insertBoard(Map<String, Object> map) throws Exception{

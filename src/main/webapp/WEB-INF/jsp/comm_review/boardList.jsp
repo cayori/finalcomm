@@ -93,15 +93,23 @@
 					divId : "PAGE_NAVI",
 					pageIndex : "PAGE_INDEX",
 					totalCount : total,
-					eventName : "fn_selectBoardList"
+					eventName : "fn_selectBoardList",
+					recordCount : 1
 				};
 				gfn_renderPaging(params);
 				
 				var str = "";
+				var imgaddr = '';
+								
 				$.each(data.list, function(key, value){
+					if(!$.trim(value.FILENAME) ){
+						imgaddr = value.MEMBER_IMG;
+					}else{
+						imgaddr = value.FILENAME;
+					}
 					str +=	"<tr>" + 
 								"<td rowspan='3' width='110'>" +
-								"<a href='#this' name='title'><img src="+ value.IMG +" width='100' height='100'></a>" +
+								"<a href='#this' name='title'><img src="+ imgaddr +" width='100' height='100'></a>" +
 								"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
 									"</td>" + 
 								"<td height='20' class='title' style='padding:5px;'>" +
