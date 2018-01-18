@@ -63,7 +63,7 @@ public class ReviewController {
 	
 	@RequestMapping(value="/openBoardDetail.do")
 	public ModelAndView openBoardDetail(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/comm_review/boardDetail");
+		ModelAndView mv = new ModelAndView("reviewDetail");
 		
 		Map<String,Object> map = reviewService.selectBoardDetail(commandMap.getMap());
 		mv.addObject("map", map.get("map"));

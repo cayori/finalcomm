@@ -6,6 +6,7 @@
 </head>
 <body>
 	<table>
+		<!-- 상단 50, 우측 80 비우기 -->
 		<tr><td height="50"/></tr>
 		<tr>
 			<td style="padding-left:100px"><h2>여행 후기</h2></td>
@@ -73,7 +74,7 @@
 			comAjax.setUrl("<c:url value='/comm/review/selectBoardList.do' />");
 			comAjax.setCallback("fn_selectBoardListCallback");
 			comAjax.addParam("PAGE_INDEX",$("#PAGE_INDEX").val());
-			comAjax.addParam("PAGE_ROW", 15);
+			comAjax.addParam("PAGE_ROW", 10);
 			comAjax.addParam("IDX_FE", $("#IDX_FE").val());
 			comAjax.ajax();
 		}
