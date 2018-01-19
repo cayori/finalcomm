@@ -77,7 +77,7 @@
 										<input type="hidden" id="ARTICLEID" name="ARTICLEID" value="${map.IDX }" />
 									</td>
 									<td width="15%" align="right">
-										<a href="#this" class="btn" id="cwrite">댓글작성하기</a>
+										<a href="#comment_input" class="btn" >댓글작성하기</a>
 									</td>
 								</tr>
 							</table>
@@ -178,17 +178,22 @@
 			comAjax.setCallback("fn_selectCommentListCallback");
 			comAjax.addParam("PAGE_INDEX",$("#PAGE_INDEX").val());
 			comAjax.addParam("ARTICLEID",$("#ARTICLEID").val());
-			comAjax.addParam("PAGE_ROW", 15);
+			comAjax.addParam("PAGE_ROW", 15);		// PAGE_ROW 하고, 20여줄 밑에 recordCount 하고는 값을 맞춰줘야 한다.
 			comAjax.ajax();
 		}
 		
 		function fn_selectCommentListCallback(data){ // 받은 json 으로 댓글 쇼잉 처리
 			var total = data.TOTAL;
 			var body = $(".comment_list>tbody");
-			//body.empty();
+			body.empty();
+			
+			$("#cBlockTitle").empty();
+			$("#cBlockTitle").append("<strong>댓글 ("+total+")</strong>");		// 댓글 카테고리 제목란 입력해주기
+ 
+			
 			if(total == 0){
 				var str = "<tr>" + 
-								"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
+								"<td colspan='4' align='center'>조회된 댓글이 없습니다.</td>" + 
 							"</tr>";
 				body.append(str);
 			}
@@ -198,7 +203,7 @@
 					pageIndex : "PAGE_INDEX",
 					totalCount : total,
 					eventName : "fn_selectCommentList",
-					recordCount : 1
+					recordCount : 15
 				};
 				gfn_renderPaging(params);
 				
