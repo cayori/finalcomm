@@ -17,4 +17,6 @@ public interface AbstractService {
 
 	void deleteBoard(Map<String, Object> map) throws Exception;
 
+	List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception;
+
 }

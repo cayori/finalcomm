@@ -83,6 +83,24 @@
 		]]>
 	</select>
 	
+	<select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/> 
+		<![CDATA[
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
+			    IDX,
+			    WRITER,
+			    CONTENT,
+			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE
+
+			FROM
+			    COMM_TRAVELREVIEW_COMMENT
+			WHERE
+				ARTICLEID = #{ARTICLEID}
+		]]>
+		<include refid="common.pagingPost"/> 
+	</select>
+	
 	<update id="updateBoard" parameterType="hashmap">
 		<![CDATA[
 			UPDATE COMM_TRAVELREVIEW 
@@ -103,6 +121,11 @@
 				IDX = #{IDX}
 		]]>
 	</update>
+	
+	
+	
+	
+	
 <!-- 	
 	<insert id="insertFile" parameterType="hashmap">
 		<![CDATA[

@@ -74,4 +74,10 @@ public class AccompanyServiceImpl implements AbstractService{
 		accompanyDAO.deleteBoard(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

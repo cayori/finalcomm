@@ -101,4 +101,21 @@ public class ReviewController {
 		
 		return mv;
 	}
+	
+	// 댓글
+	@RequestMapping(value="/selectCommentList.do")
+	public ModelAndView selectCommentList(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		List<Map<String, Object>> list = reviewService.selectCommentList(commandMap.getMap());
+		mv.addObject("list", list);
+    	if(list.size() > 0){
+    		mv.addObject("TOTAL", list.get(0).get("TOTAL_COUNT"));
+    	}
+    	else{
+    		mv.addObject("TOTAL", 0);
+    	}
+    	
+    	return mv;
+    }
 }

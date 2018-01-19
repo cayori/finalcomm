@@ -73,5 +73,11 @@ public class ReviewServiceImpl implements AbstractService{
 	public void deleteBoard(Map<String, Object> map) throws Exception {
 		reviewDAO.deleteBoard(map);
 	}
+	
+	
+	//댓글
+	public List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception {
+		return reviewDAO.selectCommentList(map);
+	}
 
 }

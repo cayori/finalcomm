@@ -37,7 +37,10 @@ public class ReviewDAO extends AbstractDAO{
 		update("review.deleteBoard", map);
 	}
 
-	
+	public List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception{
+		List<Map<String, Object>> result = (List<Map<String, Object>>)selectPagingList("review.selectCommentList", map);
+		return result;
+	}
 	
 	
 	// 파일 관련해서는 마지막에 전반적으로 손볼것
