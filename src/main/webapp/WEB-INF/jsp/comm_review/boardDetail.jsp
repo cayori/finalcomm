@@ -77,7 +77,7 @@
 										<input type="hidden" id="ARTICLEID" name="ARTICLEID" value="${map.IDX }" />
 									</td>
 									<td width="15%" align="right">
-										<a href="#comment_input" class="btn" >댓글작성하기</a>
+										<a href="#comment_input" class="btn" >댓글작성</a>
 									</td>
 								</tr>
 							</table>
@@ -211,38 +211,52 @@
 				var imgaddr = '';
 								
 				$.each(data.list, function(key, value){
-					if(!$.trim(value.FILENAME) ){
-						imgaddr = value.MEMBER_IMG;
-					}else{
-						imgaddr = value.FILENAME;
-					}
+					imgaddr = value.MEMBER_IMG;
+					var relevel = value.RE_LEVEL;
 					str +=	"<tr>" + 
-								"<td rowspan='3' width='110'>" +
-								"<a href='#this' name='title'><img src="+ imgaddr +" width='100' height='100'></a>" +
-								"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
-									"</td>" + 
-								"<td height='20' class='title' style='padding:5px;'>" +
-									value.IDX + "&nbsp;||&nbsp;&nbsp;" +
-									"<a href='#this' name='title'><STRONG>" + value.SUBJECT + "</STRONG></a>" +
-									"<input type='hidden' id='IDX' value=" + value.IDX + ">" + 
+								"<td rowspan='2' width='65' align='center'>" +
+									"<img src="+ imgaddr +" width='60' height='60'>" +
+								"</td>" + 
+								"<td colspan='2' height='20' class='title' style='padding:1px;'>" +
+									value.IDX + "&nbsp;&nbsp;||&nbsp;&nbsp;" + value.WRITER + "&nbsp;&nbsp;||&nbsp;&nbsp;" + value.WRITEDATE +
 								"</td>" +
-								"<td width='30%' height='20' style='padding:5px;'>" + value.WRITEDATE + "&nbsp;||&nbsp;" + value.WRITER + "</td>" +
 							"</tr>" +
-							"<tr>" +
-								"<td colspan='2' style='color:#cccdce;'>" + value.CONTENT + "......</td>" +
-							"</tr>" +
-							"<tr>" +
-								"<td height='10' colspan='2' style='padding:0px;'>" + value.TAG + "</td>" +
-							"</tr>";
+							"<tr>";
+					
+					if(value.RE_LEVEL > 0){		
+						str +=	"<td colspan='2'>" +
+								"<table width='100%'>" +
+									"<tr>" +
+										"<td width='"+18*relevel+"' style='padding:0 0 0 0;vertical-align:top;'>";
+											while(relevel--){
+												str +=	"<img src='/finalcomm/img/comment.gif' width='15'>";
+											}
+						str +=			"</td>";
+					}
+					
+					str +=		"<td colspan='2'>" +
+									value.CONTENT + "&nbsp;&nbsp;" +
+									"<a href='#'><img src='/finalcomm/img/comment.gif' width='20'>[답글달기]</a>" + "&nbsp;" +
+									"<br/><a href='#'><img src='/finalcomm/img/delete.jpg' width='50'>" +	
+								"</td>";
+								
+					if(value.RE_LEVEL > 0){			
+						str +=		"</tr>" +
+								"</table>" +
+								"</td>";
+					}
+								
+						str +="</tr>";
 				});
 				body.append(str);
-				
+			}
+			
 				$("a[name='title']").on("click", function(e){     //제목을 클릭하면 상세보기 함수 호출
 					e.preventDefault();
 					fn_openBoardDetail($(this));
 				});
 			}
-		}
+
 	</script>
 </body>
 </html>

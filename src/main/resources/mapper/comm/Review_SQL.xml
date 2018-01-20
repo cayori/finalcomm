@@ -87,16 +87,19 @@
 		<include refid="common.pagingPre"/> 
 		<![CDATA[
 			SELECT
-				ROW_NUMBER() OVER (ORDER BY IDX DESC) RNUM,
-			    IDX,
-			    WRITER,
-			    CONTENT,
-			    TO_CHAR(WRITEDATE, 'YYYY.MM.DD') AS WRITEDATE
-
+				ROW_NUMBER() OVER (ORDER BY a.IDX DESC) RNUM,
+			    a.IDX,
+			    a.WRITER,
+			    a.CONTENT,
+			    a.REF,
+			    a.RE_LEVEL,
+			    a.RE_STEP,
+			    TO_CHAR(a.WRITEDATE, 'YYYY.MM.DD HH:mm:SS') AS WRITEDATE,
+			    b.MEMBER_IMG
 			FROM
-			    COMM_TRAVELREVIEW_COMMENT
+			    COMM_TRAVELREVIEW_COMMENT a, MEMBER b
 			WHERE
-				ARTICLEID = #{ARTICLEID}
+				ARTICLEID = #{ARTICLEID} AND a.WRITER = b.NAME
 		]]>
 		<include refid="common.pagingPost"/> 
 	</select>
