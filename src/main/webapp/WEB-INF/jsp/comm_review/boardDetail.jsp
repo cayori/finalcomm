@@ -81,13 +81,16 @@
 									</td>
 								</tr>
 							</table>
-							<table width="100%" class="board_view comment_list" style="border-top:0px black solid;">
+							<table width="100%" class="board_view comment_list" style="border-top:0px black solid;"> 
 								<colgroup>
 									<col width="15%">
 									<col width="70%">
 									<col width="15%">
 								</colgroup>
 								<tbody>
+									
+									
+									
 									
 								</tbody>
 							</table>
@@ -236,17 +239,31 @@
 					
 					str +=		"<td colspan='2'>" +
 									value.CONTENT + "&nbsp;&nbsp;" +
-									"<a href='#'><img src='/finalcomm/img/comment.gif' width='20'>[답글달기]</a>" + "&nbsp;" +
-									"<br/><a href='#'><img src='/finalcomm/img/delete.jpg' width='50'>" +	
-								"</td>";
-								
+									"<a href='javascript:toggleReplyForm("+value.IDX+");'><img src='/finalcomm/img/comment.gif' width='20'>[답글달기]</a>" + "&nbsp;" +
+									"<br/><a href='#'><img src='/finalcomm/img/delete.jpg' width='50'>" +
+								"</td>";													
+							
 					if(value.RE_LEVEL > 0){			
 						str +=		"</tr>" +
 								"</table>" +
 								"</td>";
 					}
 								
-						str +="</tr>";
+						str +=	"</tr>" +
+								"<tr id='"+value.IDX+"commentReply' style='display:none;'>" +
+									"<td colspan='3'>" +
+										"<table width='100%'>" +
+											"<tr>" +
+												"<td colspan='2'>" +
+													 "<textarea type='text' name='comment_input' id='comment_input rows='5' cols='60' value='' class='comment_input'></textarea>" +
+												"</td>" +
+												"<td class='common_input_btn_text'>" +
+													"<a href='#this' id='creply'>등록</a>" +
+												"</td>" +
+											"</tr>" +
+										"</table>" +
+									"</td>" +
+								"</tr>";
 				});
 				body.append(str);
 			}
@@ -256,6 +273,18 @@
 					fn_openBoardDetail($(this));
 				});
 			}
+
+
+		function toggleReplyForm(cidx) {
+			var commentReplyDiv = document.getElementById(cidx+'commentReply');
+			if(commentReplyDiv.style.display == ''){
+				commentReplyDiv.style.display = 'none';
+			}else{
+				commentReplyDiv.style.display = '';
+				focus
+			}
+		}
+
 
 	</script>
 </body>
