@@ -3,6 +3,7 @@
 <html lang="ko">
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
+<script type="text/javascript" src="/finalcomm/js/ajax.js"></script>
 </head>
 <body>
 	<table>
@@ -94,17 +95,19 @@
 									
 								</tbody>
 							</table>
-							<table width="100%">
-								<tr>
-									<td colspan="2">
-										 <textarea type="text" name="comment_input" id="comment_input" rows="5" cols="60" value="" class="comment_input"></textarea>
-
-									</td>
-									<td class="common_input_btn_text">
-										<a href="#this" id="cwrite">등록</a>
-									</td>
-								</tr>
-							</table>
+							<form action="" name="addCommentForm"></form>
+								<table width="100%">
+									<tr>
+										<td colspan="2">
+											 <textarea name="comment_input" id="comment_input" rows="5" cols="60" class="comment_input"></textarea>
+	
+										</td>
+										<td class="common_input_btn_text">
+											<a href="#this" id="cwrite" name="cwrite">등록</a>
+										</td>
+									</tr>
+								</table>
+							</form>
 							<!-- 댓글파트 종료 -->
 						</td>
 						<td width="10%"></td>
@@ -144,14 +147,54 @@
 			
 			$("#cwrite").on("click", function(e){ //댓글쓰기 버튼
 				e.preventDefault();
-				fn_openBoardWrite();
+				fn_commentAdd($(this));
 			});	
 			
-			$("a[name='reply']").on("click", function(e){ // 대댓글 쓰기 버튼
+			$("a[name='creply']").on("click", function(e){ // 대댓글 쓰기 버튼
 				e.preventDefault();
-				fn_openBoardDetail($(this));
+				fn_commentAdd($(this));
 			});
 		});
+		
+		function fn_commentAdd(obj){
+			var writer = '작성자'; // 컨트롤러 단에서 세션에서받아서 처리하면 없앨것
+			console.log(obj);
+			var content = '';
+			if(obj.get()[0] == document.getElementById("cwrite"))
+				content = $("#comment_input").val();
+			else
+				content = $("#"+(obj.parent().find('#commentIDX').val())).val();
+			
+			var articleid = ${map.IDX };
+			
+			var ref = obj.parent().find("#REF").val();
+			ref = ref ? ref : -1;
+			
+			var re_step = obj.parent().find("#RE_STEP").val();
+			re_step = re_step ? re_step*1+1 : 0;
+			
+			var re_level = obj.parent().find("#RE_LEVEL").val();
+			re_level = re_level ? re_level*1+1 : 0;
+			
+			var params = "WRITER="+encodeURIComponent(writer)+"&"+
+			             "CONTENT="+encodeURIComponent(content)+"&"+
+			             "ARTICLEID="+articleid+"&"+
+			             "REF="+ref+"&"+
+			             "RE_STEP="+re_step+"&"+
+			             "RE_LEVEL="+re_level;
+			console.log(params);
+			
+			new ajax.xhr.Request('commentAdd.do', params, addResult, 'POST');
+		}
+		function addResult(req) {
+			if (req.readyState == 4 && req.status == 200) {
+				alert("등록했습니다! [댓글번호:]");
+			} else {
+				alert("에러 발생: ");
+			}
+			fn_selectCommentList($("#PAGE_INDEX"));
+			self.location.hash='cBlockTitle';
+		}
 		
 		function fn_openBoardList(){
 			var comSubmit = new ComSubmit();
@@ -255,10 +298,14 @@
 										"<table width='100%'>" +
 											"<tr>" +
 												"<td colspan='2'>" +
-													 "<textarea type='text' name='comment_input' id='comment_input rows='5' cols='60' value='' class='comment_input'></textarea>" +
+													 "<textarea type='text' name='"+value.IDX+"comment_input' id='"+value.IDX+"comment_input' rows='5' cols='60' value='' class='comment_input'></textarea>" +
 												"</td>" +
 												"<td class='common_input_btn_text'>" +
-													"<a href='#this' id='creply'>등록</a>" +
+													"<a href='#this' name='creply'>등록</a>" +
+													"<input type='hidden' name='commentIDX' id='commentIDX' value='"+value.IDX+"comment_input'>" +
+													"<input type='hidden' name='REF' id='REF' value='"+value.REF+"'>" +
+													"<input type='hidden' name='RE_STEP' id='RE_STEP' value='"+value.RE_STEP+"'>" +
+													"<input type='hidden' name='RE_LEVEL' id='RE_LEVEL' value='"+value.RE_LEVEL+"'>" +
 												"</td>" +
 											"</tr>" +
 										"</table>" +
@@ -272,6 +319,7 @@
 					e.preventDefault();
 					fn_openBoardDetail($(this));
 				});
+				
 			}
 
 

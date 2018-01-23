@@ -19,4 +19,6 @@ public interface AbstractService {
 
 	List<Map<String, Object>> selectCommentList(Map<String, Object> map) throws Exception;
 
+	void commentAdd(Map<String, Object> map) throws Exception;
+
 }

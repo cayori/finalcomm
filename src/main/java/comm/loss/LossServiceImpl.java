@@ -80,4 +80,10 @@ public class LossServiceImpl implements AbstractService{
 		return null;
 	}
 
+	@Override
+	public void commentAdd(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

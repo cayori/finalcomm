@@ -118,4 +118,13 @@ public class ReviewController {
     	
     	return mv;
     }
+	
+	// 댓글삽입
+	@RequestMapping(value="/commentAdd.do")
+	public ModelAndView commentAdd(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		reviewService.commentAdd(commandMap.getMap());
+		return mv;
+	}
 }

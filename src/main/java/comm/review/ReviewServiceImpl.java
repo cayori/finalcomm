@@ -80,4 +80,9 @@ public class ReviewServiceImpl implements AbstractService{
 		return reviewDAO.selectCommentList(map);
 	}
 
+	@Override
+	public void commentAdd(Map<String, Object> map) throws Exception {
+		reviewDAO.commentAdd(map);		
+	}
+
 }

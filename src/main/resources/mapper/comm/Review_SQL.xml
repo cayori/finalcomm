@@ -83,27 +83,6 @@
 		]]>
 	</select>
 	
-	<select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
-		<include refid="common.pagingPre"/> 
-		<![CDATA[
-			SELECT
-				ROW_NUMBER() OVER (ORDER BY a.IDX DESC) RNUM,
-			    a.IDX,
-			    a.WRITER,
-			    a.CONTENT,
-			    a.REF,
-			    a.RE_LEVEL,
-			    a.RE_STEP,
-			    TO_CHAR(a.WRITEDATE, 'YYYY.MM.DD HH:mm:SS') AS WRITEDATE,
-			    b.MEMBER_IMG
-			FROM
-			    COMM_TRAVELREVIEW_COMMENT a, MEMBER b
-			WHERE
-				ARTICLEID = #{ARTICLEID} AND a.WRITER = b.NAME
-		]]>
-		<include refid="common.pagingPost"/> 
-	</select>
-	
 	<update id="updateBoard" parameterType="hashmap">
 		<![CDATA[
 			UPDATE COMM_TRAVELREVIEW 
@@ -154,4 +133,59 @@
 		]]>
 	</update>
  -->
+ 
+ <!-- 댓글부 -->
+ 	<select id="selectCommentList" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/> 
+		<![CDATA[
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY a.IDX DESC) RNUM,
+			    a.IDX,
+			    a.WRITER,
+			    a.CONTENT,
+			    a.REF,
+			    a.RE_LEVEL,
+			    a.RE_STEP,
+			    TO_CHAR(a.WRITEDATE, 'YYYY.MM.DD HH:mm:SS') AS WRITEDATE,
+			    b.MEMBER_IMG
+			FROM
+			    COMM_TRAVELREVIEW_COMMENT a, MEMBER b
+			WHERE
+				ARTICLEID = #{ARTICLEID} AND a.WRITER = b.NAME
+		]]>
+		<include refid="common.pagingPost"/> 
+	</select>
+	
+	<insert id="commentAdd" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
+			SELECT COMM_TRAVELREVIEW_C_IDX_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO COMM_TRAVELREVIEW_COMMENT
+			(
+				IDX,
+			    ARTICLEID,
+			    WRITER,
+			    CONTENT,
+			    WRITEDATE,
+			    REF,
+			    RE_STEP,
+			    RE_LEVEL
+			)
+			VALUES
+			(
+				#{IDX},
+				#{ARTICLEID},
+				#{WRITER},
+				#{CONTENT},
+			    SYSDATE, 
+			    
+			    		#{IDX},
+			    
+			    #{RE_STEP},
+			    #{RE_LEVEL}
+			)
+		]]>
+	</insert>
+	
 </mapper>
