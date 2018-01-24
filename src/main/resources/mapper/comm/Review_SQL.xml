@@ -161,10 +161,9 @@
 	<update id="commentUpdateRE_STEP" parameterType="hashmap">
 		<![CDATA[
 			UPDATE	COMM_TRAVELREVIEW_COMMENT
-			SET		RE_STEP = ${RE_STEP}+1
+			SET		RE_STEP = #{RE_STEP}+1
 			WHERE	REF = #{REF} AND
-			        RE_STEP >= ${RE_STEP}
-        	)
+			        RE_STEP >= #{RE_STEP}
 		]]>
 	</update>
 	<insert id="commentAdd" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
