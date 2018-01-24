@@ -61,8 +61,15 @@ public class ReviewDAO extends AbstractDAO{
 		update("review.updateFile", map);
 	}
 
-	public void commentAdd(Map<String, Object> map) {
-		insert("review.commentAdd", map);		
+	
+	public void commentUpdateRE_STEP(Map<String,Object> map) {
+		update("review.commentUpdateRE_STEP", map);
 	}
-
+	public Map<String, Object> commentAdd(Map<String, Object> map) {
+		insert("review.commentAdd", map);	
+		return map;
+	}
+	public void commentUpdateREF(Map<String,Object> map) {
+		update("review.commentUpdateREF", map);	
+	}
 }

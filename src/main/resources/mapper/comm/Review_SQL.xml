@@ -156,6 +156,17 @@
 		<include refid="common.pagingPost"/> 
 	</select>
 	
+	
+	
+	<update id="commentUpdateRE_STEP" parameterType="hashmap">
+		<![CDATA[
+			UPDATE	COMM_TRAVELREVIEW_COMMENT
+			SET		RE_STEP = ${RE_STEP}+1
+			WHERE	REF = #{REF} AND
+			        RE_STEP >= ${RE_STEP}
+        	)
+		]]>
+	</update>
 	<insert id="commentAdd" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
 		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
 			SELECT COMM_TRAVELREVIEW_C_IDX_SEQ.NEXTVAL FROM DUAL
@@ -179,13 +190,21 @@
 				#{WRITER},
 				#{CONTENT},
 			    SYSDATE, 
-			    
-			    		#{IDX},
-			    
+			    #{REF},
 			    #{RE_STEP},
 			    #{RE_LEVEL}
 			)
 		]]>
 	</insert>
-	
+	<update id="commentUpdateREF">
+		<![CDATA[
+			UPDATE	COMM_TRAVELREVIEW_COMMENT
+			SET		REF = (	SELECT	MAX(IDX)
+			        FROM	COMM_TRAVELREVIEW_COMMENT
+			        )
+			WHERE	IDX = (	SELECT	MAX(IDX)
+			        FROM	COMM_TRAVELREVIEW_COMMENT
+        	)
+		]]>
+	</update>
 </mapper>

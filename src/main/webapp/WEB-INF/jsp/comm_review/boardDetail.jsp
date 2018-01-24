@@ -189,8 +189,6 @@
 		function addResult(req) {
 			if (req.readyState == 4 && req.status == 200) {
 				alert("등록했습니다! [댓글번호:]");
-			} else {
-				alert("에러 발생: ");
 			}
 			fn_selectCommentList($("#PAGE_INDEX"));
 			self.location.hash='cBlockTitle';

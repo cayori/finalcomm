@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import comm.common.service.AbstractService;
 import comm.common.util.FileUtils;
@@ -80,9 +81,17 @@ public class ReviewServiceImpl implements AbstractService{
 		return reviewDAO.selectCommentList(map);
 	}
 
+	@Transactional
 	@Override
 	public void commentAdd(Map<String, Object> map) throws Exception {
-		reviewDAO.commentAdd(map);		
+		if(Integer.parseInt(map.get("REF").toString()) > -1)
+			reviewDAO.commentUpdateRE_STEP(map);
+		
+		reviewDAO.commentAdd(map);
+		
+		if(Integer.parseInt(map.get("REF").toString()) == -1)
+			reviewDAO.commentUpdateREF(map);
+		
+		
 	}
-
 }
