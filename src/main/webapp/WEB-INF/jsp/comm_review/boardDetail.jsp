@@ -98,6 +98,13 @@
 							<form action="" name="addCommentForm"></form>
 								<table width="100%">
 									<tr>
+										<td width="100%" align="center" colspan="3">
+											<div id="COMMENT_NAVI2" align="center"></div>
+											<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+											<input type="hidden" id="ARTICLEID" name="ARTICLEID" value="${map.IDX }" />
+										</td>
+									</tr>
+									<tr>
 										<td colspan="2">
 											 <textarea name="comment_input" id="comment_input" rows="5" cols="60" class="comment_input"></textarea>
 	
@@ -147,12 +154,20 @@
 			
 			$("#cwrite").on("click", function(e){ //댓글쓰기 버튼
 				e.preventDefault();
+				console.log('cwrite 버튼 클릭됨');
 				fn_commentAdd($(this));
 			});	
 			
-			$("a[name='creply']").on("click", function(e){ // 대댓글 쓰기 버튼
+			$("#creply").on("click", function(e){ // 대댓글 쓰기 버튼
 				e.preventDefault();
+				console.log('creply 버튼 클릭됨');
 				fn_commentAdd($(this));
+			});
+			
+			$("#cdelete").on("click", function(e){ // 댓글 삭제 버튼
+				e.preventDefault();
+				console.log('cdelete 버튼 클릭됨');
+				fn_commentDelete($(this));
 			});
 		});
 		
@@ -183,15 +198,33 @@
 			             "RE_STEP="+re_step+"&"+
 			             "RE_LEVEL="+re_level;
 			console.log(params);
-			
-			new ajax.xhr.Request('commentAdd.do', params, addResult, 'POST');
+			new ajax.xhr.Request('commentAdd.do', params, addResult, 'POST', false);
+			new ajax.xhr.abort();
 		}
 		function addResult(req) {
 			if (req.readyState == 4 && req.status == 200) {
-				alert("등록했습니다! [댓글번호:]");
+				alert("등록했습니다!");
+				fn_selectCommentList($("#PAGE_INDEX"));
+				self.location.hash='cBlockTitle';
 			}
-			fn_selectCommentList($("#PAGE_INDEX"));
-			self.location.hash='cBlockTitle';
+			console.log('checkup');
+		}
+		
+		function fn_commentDelete(obj){
+			// 글 작성자와 세션아이디가 동일한지 체크할것
+			var cidx = obj.parent().find('#cidx').val();
+			var params = "IDX="+cidx;
+			console.log(cidx);
+			console.log(params);
+			new ajax.xhr.Request('commentDelete.do', params, cDeleteResult, 'POST');
+		}
+		
+		function cDeleteResult(req) {
+			if (req.readyState == 4 && req.status == 200) {
+				alert("삭제했습니다");
+				fn_selectCommentList($("#PAGE_INDEX"));
+			}
+			console.log('deleteCheckup');
 		}
 		
 		function fn_openBoardList(){
@@ -250,6 +283,8 @@
 					recordCount : 15
 				};
 				gfn_renderPaging(params);
+				params.divId = "COMMENT_NAVI2";
+				gfn_renderPaging(params);
 				
 				var str = "";
 				var imgaddr = '';
@@ -281,7 +316,8 @@
 					str +=		"<td colspan='2'>" +
 									value.CONTENT + "&nbsp;&nbsp;" +
 									"<a href='javascript:toggleReplyForm("+value.IDX+");'><img src='/finalcomm/img/comment.gif' width='20'>[답글달기]</a>" + "&nbsp;" +
-									"<br/><a href='#'><img src='/finalcomm/img/delete.jpg' width='50'>" +
+									"<br/><a href='javascript:toggleReplyForm("+value.IDX+")' id='cdelete'><img src='/finalcomm/img/delete.jpg' width='50'>" +
+									"<input type='hidden' id='cidx' value="+value.IDX+">" +
 								"</td>";													
 							
 					if(value.RE_LEVEL > 0){			
@@ -299,7 +335,7 @@
 													 "<textarea type='text' name='"+value.IDX+"comment_input' id='"+value.IDX+"comment_input' rows='5' cols='60' value='' class='comment_input'></textarea>" +
 												"</td>" +
 												"<td class='common_input_btn_text'>" +
-													"<a href='#this' name='creply'>등록</a>" +
+													"<a href='#this' name='creply' id='creply'>등록</a>" +
 													"<input type='hidden' name='commentIDX' id='commentIDX' value='"+value.IDX+"comment_input'>" +
 													"<input type='hidden' name='REF' id='REF' value='"+value.REF+"'>" +
 													"<input type='hidden' name='RE_STEP' id='RE_STEP' value='"+value.RE_STEP+"'>" +

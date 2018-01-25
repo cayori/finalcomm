@@ -127,4 +127,12 @@ public class ReviewController {
 		reviewService.commentAdd(commandMap.getMap());
 		return mv;
 	}
+	
+	@RequestMapping(value="/commentDelete.do")
+	public ModelAndView commentDelete(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		reviewService.commentDelete(commandMap.getMap());
+		return mv;
+	}
 }

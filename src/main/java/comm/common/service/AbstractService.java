@@ -21,4 +21,6 @@ public interface AbstractService {
 
 	void commentAdd(Map<String, Object> map) throws Exception;
 
+	void commentDelete(Map<String, Object> map) throws Exception;
+
 }

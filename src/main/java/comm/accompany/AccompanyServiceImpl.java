@@ -83,6 +83,12 @@ public class AccompanyServiceImpl implements AbstractService{
 	@Override
 	public void commentAdd(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void commentDelete(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
 		
 	}
 

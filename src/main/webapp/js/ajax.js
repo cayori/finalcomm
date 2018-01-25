@@ -8,6 +8,14 @@ ajax.xhr.Request = function(url, params, callback, method) {
 	this.method = method;
 	this.send();
 }
+ajax.xhr.Request = function(url, params, callback, method, async) {
+	this.url = url;
+	this.params = params;
+	this.callback = callback;
+	this.method = method;
+	this.async = async;
+	this.send();
+}
 ajax.xhr.Request.prototype = {
 	getXMLHttpRequest: function() {
 		if (window.ActiveXObject) {

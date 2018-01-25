@@ -91,7 +91,9 @@ public class ReviewServiceImpl implements AbstractService{
 		
 		if(Integer.parseInt(map.get("REF").toString()) == -1)
 			reviewDAO.commentUpdateREF(map);
-		
-		
+	}
+	
+	public void commentDelete(Map<String, Object> map) throws Exception{
+		reviewDAO.commentDelete(map);
 	}
 }

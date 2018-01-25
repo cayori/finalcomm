@@ -139,7 +139,7 @@
 		<include refid="common.pagingPre"/> 
 		<![CDATA[
 			SELECT
-				ROW_NUMBER() OVER (ORDER BY a.IDX DESC) RNUM,
+				ROW_NUMBER() OVER (ORDER BY a.REF DESC, a.RE_STEP ASC) RNUM,
 			    a.IDX,
 			    a.WRITER,
 			    a.CONTENT,
@@ -204,6 +204,13 @@
 			WHERE	IDX = (	SELECT	MAX(IDX)
 			        FROM	COMM_TRAVELREVIEW_COMMENT
         	)
+		]]>
+	</update>
+	
+	<update id="commentDelete" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM COMM_TRAVELREVIEW_COMMENT
+			WHERE IDX = #{IDX}
 		]]>
 	</update>
 </mapper>

@@ -72,4 +72,9 @@ public class ReviewDAO extends AbstractDAO{
 	public void commentUpdateREF(Map<String,Object> map) {
 		update("review.commentUpdateREF", map);	
 	}
+
+	public void commentDelete(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		update("review.commentDelete", map);
+	}
 }
