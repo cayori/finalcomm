@@ -3,12 +3,19 @@
 <html lang="ko">
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
+
+
+<!-- summernote start -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="/finalcomm/summernote/summernote-bs4.css" rel="stylesheet">
+<!-- summernote end -->
+
+
+
 </head>
 <body>
 	<form id="frm" name="frm" enctype="multipart/form-data">
 		<input type='hidden' name='WRITER' value='작성자'>
-		<input type='hidden' name='REGION' value=' '>
-		<input type='hidden' name='TAG' value=' '>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%">
@@ -22,7 +29,9 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="view_text">
-						<textarea rows="20" cols="100" title="내용" id="CONTENT" name="CONTENT"></textarea>
+						<textarea rows="20" cols="100" title="내용" id="summernote" name="CONTENT"></textarea><br />
+						지역: <input type="text" name='REGION' value=' '><br />
+						태그: <input type="text" name='TAG' value=' '> 태그는 콤마로 구분해주세요<br />
 					</td>
 				</tr>
 			</tbody>
@@ -45,6 +54,35 @@
 		var gfv_count = 1;
 	
 		$(document).ready(function(){
+			$('#summernote').summernote({
+				  height: 300,				// set editor height
+				  minHeight: null,			// set minimum height of editor
+				  maxHeight: null,			// set maximum height of editor
+				  focus: true,				// set focus to editable area after initializing summernote
+				  lang: 'ko-KR',			// default: 'en-US'
+				  callbacks: {
+					  onImageUpload: function(files){
+										  sendFile(files[0]);
+									  }
+				  }
+				});
+			
+			function sendFile(file){
+				data = new FormData();
+				data.append("file", file);
+				$.ajax({
+					url:			'/finalcomm/common/GetTempFileUrl.do',
+					data:			data,
+					cache:			false,
+					type:			"POST",
+					contentType:	false,
+					processData:	false,
+					success:		function(url){
+										$('#summernote').summernote('insertImage', url);
+									}
+				});
+			}
+			
 			$("#list").on("click", function(e){ //목록으로 버튼
 				e.preventDefault();
 				fn_openBoardList();
@@ -52,7 +90,8 @@
 			
 			$("#write").on("click", function(e){ //작성하기 버튼
 				e.preventDefault();
-				fn_insertBoard();
+				console.log($("#summernote").val());
+				//fn_insertBoard();
 			});
 			
 			$("#addFile").on("click", function(e){ //파일 추가 버튼
@@ -68,7 +107,7 @@
 		
 		function fn_openBoardList(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+			comSubmit.setUrl("<c:url value='/comm/review/openBoardList.do' />");
 			comSubmit.submit();
 		}
 		
@@ -91,5 +130,12 @@
 			obj.parent().remove();
 		}
 	</script>
+	
+<!-- summernote start -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script src="/finalcomm/summernote/summernote-bs4.js"></script>
+<!-- summernote end -->
+
 </body>
 </html>

@@ -110,7 +110,8 @@
 	
 										</td>
 										<td class="common_input_btn_text">
-											<a href="#this" id="cwrite" name="cwrite">등록</a>
+											<a href="javascript:fn_commentAdd('작성자', 'comment_input', ${map.IDX}, -1, -1, -1)" id="cwrite" name="cwrite">등록</a>
+											<!--  fn_commentAdd(작성자, 글내용ID값, 글IDX, 부모REF, 부모RE_STEP, 부모RE_LEVEL) -->
 										</td>
 									</tr>
 								</table>
@@ -152,44 +153,16 @@
 				fn_downloadFile($(this));
 			});
 			
-			$("#cwrite").on("click", function(e){ //댓글쓰기 버튼
-				e.preventDefault();
-				console.log('cwrite 버튼 클릭됨');
-				fn_commentAdd($(this));
-			});	
-			
-			$("#creply").on("click", function(e){ // 대댓글 쓰기 버튼
-				e.preventDefault();
-				console.log('creply 버튼 클릭됨');
-				fn_commentAdd($(this));
-			});
-			
-			$("#cdelete").on("click", function(e){ // 댓글 삭제 버튼
-				e.preventDefault();
-				console.log('cdelete 버튼 클릭됨');
-				fn_commentDelete($(this));
-			});
 		});
 		
-		function fn_commentAdd(obj){
-			var writer = '작성자'; // 컨트롤러 단에서 세션에서받아서 처리하면 없앨것
-			console.log(obj);
-			var content = '';
-			if(obj.get()[0] == document.getElementById("cwrite"))
-				content = $("#comment_input").val();
-			else
-				content = $("#"+(obj.parent().find('#commentIDX').val())).val();
-			
-			var articleid = ${map.IDX };
-			
-			var ref = obj.parent().find("#REF").val();
-			ref = ref ? ref : -1;
-			
-			var re_step = obj.parent().find("#RE_STEP").val();
-			re_step = re_step ? re_step*1+1 : 0;
-			
-			var re_level = obj.parent().find("#RE_LEVEL").val();
-			re_level = re_level ? re_level*1+1 : 0;
+		function fn_commentAdd(writer, contentid, articleid, p_ref, p_re_step, p_re_level){
+			// checkup data start
+			console.log(writer, contentid, articleid, p_ref, p_re_step, p_re_level);
+			// checkup data end
+			var content = $("#"+contentid).val();
+			var ref = p_ref ? p_ref : -1;
+			var re_step = (p_re_step >= 0) ? p_re_step*1+1 : 0;
+			var re_level = (p_re_level >= 0) ? p_re_level*1+1 : 0;
 			
 			var params = "WRITER="+encodeURIComponent(writer)+"&"+
 			             "CONTENT="+encodeURIComponent(content)+"&"+
@@ -199,7 +172,6 @@
 			             "RE_LEVEL="+re_level;
 			console.log(params);
 			new ajax.xhr.Request('commentAdd.do', params, addResult, 'POST', false);
-			new ajax.xhr.abort();
 		}
 		function addResult(req) {
 			if (req.readyState == 4 && req.status == 200) {
@@ -210,9 +182,8 @@
 			console.log('checkup');
 		}
 		
-		function fn_commentDelete(obj){
+		function fn_commentDelete(cidx){
 			// 글 작성자와 세션아이디가 동일한지 체크할것
-			var cidx = obj.parent().find('#cidx').val();
 			var params = "IDX="+cidx;
 			console.log(cidx);
 			console.log(params);
@@ -314,9 +285,12 @@
 					}
 					
 					str +=		"<td colspan='2'>" +
+									// checkup data start
+									// value.REF+" || "+value.RE_STEP+" || "+value.RE_LEVEL+"<br/>" +
+									// checkup data end
 									value.CONTENT + "&nbsp;&nbsp;" +
 									"<a href='javascript:toggleReplyForm("+value.IDX+");'><img src='/finalcomm/img/comment.gif' width='20'>[답글달기]</a>" + "&nbsp;" +
-									"<br/><a href='javascript:toggleReplyForm("+value.IDX+")' id='cdelete'><img src='/finalcomm/img/delete.jpg' width='50'>" +
+									"<br/><a href='javascript:fn_commentDelete("+value.IDX+")' id='cdelete'><img src='/finalcomm/img/delete.jpg' width='50'>" +
 									"<input type='hidden' id='cidx' value="+value.IDX+">" +
 								"</td>";													
 							
@@ -335,11 +309,8 @@
 													 "<textarea type='text' name='"+value.IDX+"comment_input' id='"+value.IDX+"comment_input' rows='5' cols='60' value='' class='comment_input'></textarea>" +
 												"</td>" +
 												"<td class='common_input_btn_text'>" +
-													"<a href='#this' name='creply' id='creply'>등록</a>" +
-													"<input type='hidden' name='commentIDX' id='commentIDX' value='"+value.IDX+"comment_input'>" +
-													"<input type='hidden' name='REF' id='REF' value='"+value.REF+"'>" +
-													"<input type='hidden' name='RE_STEP' id='RE_STEP' value='"+value.RE_STEP+"'>" +
-													"<input type='hidden' name='RE_LEVEL' id='RE_LEVEL' value='"+value.RE_LEVEL+"'>" +
+													"<a href='javascript:fn_commentAdd(\"작성자\",\""+value.IDX+"comment_input\","+${map.IDX}+","+value.REF+","+value.RE_STEP+","+value.RE_LEVEL+")' name='creply' id='creply'>등록</a>" +
+													// fn_commentAdd(작성자, 글내용ID값, 글IDX, 부모REF, 부모RE_STEP, 부모RE_LEVEL)
 												"</td>" +
 											"</tr>" +
 										"</table>" +

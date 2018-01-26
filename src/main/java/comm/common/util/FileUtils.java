@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -17,6 +16,38 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FileUtils {
 	
 	private static final String filePath = "C:\\dev\\file\\";
+	private static final String tempFilePath = "C:\\comm\\tempImages\\";
+
+	public static String getTempFileUrl(HttpServletRequest request) throws Exception{
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+    	Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+    	
+    	MultipartFile multipartFile = null;
+    	String originalFileName = null;
+    	String originalFileExtension = null;
+    	String storedFileName = null;
+    	String returnUrl = null;
+    	
+        File file = new File(tempFilePath);
+        if(file.exists() == false){
+        	file.mkdirs();
+        }
+        
+        while(iterator.hasNext()){
+        	multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+        	if(multipartFile.isEmpty() == false){
+        		originalFileName = multipartFile.getOriginalFilename();
+        		originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        		storedFileName = CommonUtils.getNowTimeToString() + "_" + originalFileName;
+        		
+        		file = new File(tempFilePath + storedFileName);
+        		multipartFile.transferTo(file);
+        		
+        		returnUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/common/GetTempFile.do?filename="+storedFileName;
+        	}
+        }
+		return returnUrl;
+	}
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -105,4 +136,7 @@ public class FileUtils {
         }
 		return list;
 	}
+	
+	
+	
 }

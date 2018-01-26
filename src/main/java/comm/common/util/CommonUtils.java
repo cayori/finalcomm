@@ -16,6 +16,10 @@ public class CommonUtils {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
+	public static String getNowTimeToString() {
+		return System.currentTimeMillis()+"";
+	}
+	
 	public static void printMap(Map<String,Object> map){
 		Iterator<Entry<String,Object>> iterator = map.entrySet().iterator();
 		Entry<String,Object> entry = null;
