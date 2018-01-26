@@ -51,9 +51,9 @@ public class CommonController {
 		Map<String,Object> map = commandMap.getMap();
 		String storedFileName = (String)map.get("filename");
 		
-		byte fileByte[] = FileUtils.readFileToByteArray(new File("C:\\comm\\tempImages\\"+storedFileName));
+		byte fileByte[] = FileUtils.readFileToByteArray(new File(tempFilePath+storedFileName));
 		
-		response.setContentType("imgae/jpeg");
+		response.setContentType("image/jpeg");
 		response.setContentLength(fileByte.length);
 		response.getOutputStream().write(fileByte);
 		
